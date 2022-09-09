@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import Photo from "./Photo";
 
 const AddEmpModal = () => {
@@ -20,6 +21,7 @@ const AddEmpModal = () => {
       .then((res) => res.json())
       .then((result) => {
         if (result) {
+          toast.success("Registration completed successful!");
         }
       });
   };

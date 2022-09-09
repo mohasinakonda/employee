@@ -1,6 +1,7 @@
 import React from "react";
 import AddEmployee from "./AddEmployee";
 import Employee from "./Employee";
+import Table from "./employeeTable/Table";
 import AddEmpModal from "./modals/AddEmpModal";
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
           <input type="text" className="input input-primary" />
           <button className="btn btn-primary">find</button>
         </form>
+        <Table />
       </div>
       <AddEmpModal />
     </div>
