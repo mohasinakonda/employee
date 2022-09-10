@@ -1,3 +1,4 @@
+import { info } from "daisyui/src/colors";
 import React, { useEffect } from "react";
 
 const UpdateEmpModal = ({ id }) => {
@@ -34,7 +35,7 @@ const UpdateEmpModal = ({ id }) => {
             ✕
           </label>
           <h2 className="text-3xl text-center border-b-4 border-indigo-500 py-3">
-            Update your Information
+            Hi, {id} Update your Information
           </h2>
 
           <form onSubmit={updateEmployee} className="w-3/4 mx-auto">

@@ -9,8 +9,8 @@ const AddEmpModal = () => {
     const name = event.target.name.value;
     const email = event.target.email.value;
     const salary = event.target.salary.value;
-    const joinDate = event.target.joinDate.value;
-    const employeeInfo = { name, email, salary, joinDate, photo };
+    const joiningDate = event.target.joinDate.value;
+    const employeeInfo = { name, email, salary, joiningDate, photo };
     fetch(`http://localhost:8080/api/users/`, {
       method: "post",
       headers: {
@@ -18,7 +18,10 @@ const AddEmpModal = () => {
       },
       body: JSON.stringify(employeeInfo),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.status);
+        res.json();
+      })
       .then((result) => {
         if (result) {
           toast.success("Registration completed successful!");

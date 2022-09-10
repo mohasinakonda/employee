@@ -5,13 +5,14 @@ import UpdateEmpModal from "../modals/UpdateEmpModal";
 
 const Table = () => {
   const [employees, setEmployees] = useState([]);
+  const [id, setId] = useState("");
   useEffect(() => {
     fetch("http://localhost:8080/api/users/")
       .then((res) => res.json())
       .then((data) => setEmployees(data));
   }, []);
   const updateHandler = (id) => {
-    // alert(id);
+    setId(id);
   };
   const deleteHandler = (id) => {
     alert(id);
@@ -62,12 +63,12 @@ const Table = () => {
                   <FontAwesomeIcon icon={faTrash} />
                 </label>
               </th>
-              <UpdateEmpModal id={employee._id} />
             </tr>
           ))}
         </tbody>
         {/* <!-- foot --> */}
       </table>
+      <UpdateEmpModal id={id} />;
     </div>
   );
 };
