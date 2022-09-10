@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UpdateEmpModal from "../modals/UpdateEmpModal";
+import DeleteModal from "../modals/DeleteModal";
 
 const Table = () => {
   const [employees, setEmployees] = useState([]);
   const [id, setId] = useState("");
+  const [employee, setEmployee] = useState({});
+
   useEffect(() => {
     fetch("http://localhost:8080/api/users/")
       .then((res) => res.json())
@@ -14,9 +17,10 @@ const Table = () => {
   const updateHandler = (id) => {
     setId(id);
   };
-  const deleteHandler = (id) => {
-    alert(id);
+  const deleteHandler = (employee) => {
+    setEmployee(employee);
   };
+
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-3/4 mx-auto">
@@ -57,7 +61,8 @@ const Table = () => {
                   <FontAwesomeIcon icon={faEdit} />
                 </label>
                 <label
-                  onClick={() => deleteHandler(employee._id)}
+                  onClick={() => deleteHandler(employee)}
+                  htmlFor="delete-emp-modal"
                   className="btn modal-btn text-red-500 btn-ghost btn-xs"
                 >
                   <FontAwesomeIcon icon={faTrash} />
@@ -68,7 +73,14 @@ const Table = () => {
         </tbody>
         {/* <!-- foot --> */}
       </table>
-      <UpdateEmpModal id={id} />;
+      {/* =================================================
+                                MOdal
+      ======================================================
+      */}
+      {id && <UpdateEmpModal setId={setId} id={id} />};
+      {employee && (
+        <DeleteModal setEmployee={setEmployee} employee={employee} />
+      )}
     </div>
   );
 };

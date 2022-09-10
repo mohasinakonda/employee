@@ -1,27 +1,34 @@
-import { info } from "daisyui/src/colors";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const UpdateEmpModal = ({ id }) => {
+const UpdateEmpModal = ({ id, setId }) => {
+  const [employee, setEmployee] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:8080/api/users/${id}`).then((res) => res.json());
+    fetch(`http://localhost:8080/api/users/${id}`)
+      .then((res) => res.json())
+      .then((data) => setEmployee(data));
   }, [id]);
 
   const updateEmployee = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const salary = event.target.salary.value;
-    const joinDate = event.target.joinDate.value;
-    const info = { name, email, salary, joinDate };
+    const name = event.target.name.value || employee.name;
+    const email = event.target.email.value || employee.email;
+
+    const salary = event.target.salary.value || employee.salary;
+    const joiningDate = event.target.joinDate.value || employee.joiningDate;
+    const info = { name, email, salary, joiningDate };
     fetch(`http://localhost:8080/api/users/${id}`, {
       method: "put",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    }).then((res) => {
+      if (res.status === 200) {
+        toast.success("update successful!");
+        setId("");
+      }
+    });
   };
   return (
     <div>
@@ -35,7 +42,7 @@ const UpdateEmpModal = ({ id }) => {
             ✕
           </label>
           <h2 className="text-3xl text-center border-b-4 border-indigo-500 py-3">
-            Hi, {id} Update your Information
+            Update your Information
           </h2>
 
           <form onSubmit={updateEmployee} className="w-3/4 mx-auto">
@@ -46,7 +53,6 @@ const UpdateEmpModal = ({ id }) => {
               type="text"
               name="name"
               placeholder="Input name"
-              required
               className="input input-primary w-full"
             />
             <label className="label" htmlFor="email">
@@ -56,7 +62,6 @@ const UpdateEmpModal = ({ id }) => {
               type="email"
               name="email"
               placeholder="Input Email"
-              required
               className="input input-primary w-full"
             />
             <label className="label" htmlFor="salary">
