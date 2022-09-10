@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import UpdateEmpModal from "../modals/UpdateEmpModal";
 
 const Table = () => {
   const [employees, setEmployees] = useState([]);
@@ -7,6 +10,12 @@ const Table = () => {
       .then((res) => res.json())
       .then((data) => setEmployees(data));
   }, []);
+  const updateHandler = (id) => {
+    // alert(id);
+  };
+  const deleteHandler = (id) => {
+    alert(id);
+  };
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-3/4 mx-auto">
@@ -39,9 +48,21 @@ const Table = () => {
               <td>{employee.salary || "-"}</td>
               <td>{employee.joiningDate || "-"}</td>
               <th>
-                <button className="btn btn-ghost btn-xs">edit</button>
-                <button className="btn btn-error btn-xs">delete</button>
+                <label
+                  htmlFor="update-emp-modal"
+                  onClick={() => updateHandler(employee._id)}
+                  className="btn btn-ghost btn-xs"
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </label>
+                <label
+                  onClick={() => deleteHandler(employee._id)}
+                  className="btn modal-btn text-red-500 btn-ghost btn-xs"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </label>
               </th>
+              <UpdateEmpModal id={employee._id} />
             </tr>
           ))}
         </tbody>
