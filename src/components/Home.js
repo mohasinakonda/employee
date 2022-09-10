@@ -1,20 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faAdd } from "@fortawesome/free-solid-svg-icons";
 
 import React, { useState } from "react";
 
 import Table from "./employeeTable/Table";
-import AddEmpModal from "./modals/AddEmpModal";
 
 const Home = () => {
   const [employee, setEmployee] = useState([]);
 
   const empHandler = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    fetch(`http://localhost:8080/api/users/name/${name}`)
-      .then((res) => res.json())
-      .then((data) => setEmployee(data));
+    const name = event.target.value;
+    setEmployee(name);
   };
   return (
     <div>
@@ -23,18 +20,27 @@ const Home = () => {
           <input
             type="text"
             name="name"
+            onChange={empHandler}
             placeholder="Search"
             className="input input-primary"
           />
           <button className="btn btn-outline btn-primary">
             <FontAwesomeIcon icon={faSearch} />
           </button>
+          <label
+            htmlFor="add-emp-modal"
+            className="btn btn-outline mx-2  modal-button"
+          >
+            <FontAwesomeIcon icon={faAdd} />
+          </label>
         </form>
-        <h2 className="text-3xl text-center">Details from Employee</h2>
 
-        <Table empHandler={employee} />
+        <h2 className="text-3xl text-center border-b-4 border-indigo-500 py-3 w-3/4 mx-auto">
+          Details from Employee
+        </h2>
+
+        <Table empInfo={employee} />
       </div>
-      {/* {isOpen && <AddEmpModal setIsOpen={setIsOpen} />} */}
     </div>
   );
 };

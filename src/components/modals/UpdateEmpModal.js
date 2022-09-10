@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const UpdateEmpModal = ({ id, setId, refetch }) => {
   const [employee, setEmployee] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:8080/api/users/${id}`)
+    fetch(`https://employee-management-server2.herokuapp.com/api/users/${id}`)
       .then((res) => res.json())
       .then((data) => setEmployee(data));
   }, [id]);
@@ -17,7 +17,7 @@ const UpdateEmpModal = ({ id, setId, refetch }) => {
     const salary = event.target.salary.value || employee.salary;
     const joiningDate = event.target.joinDate.value || employee.joiningDate;
     const info = { name, email, salary, joiningDate };
-    fetch(`http://localhost:8080/api/users/${id}`, {
+    fetch(`https://employee-management-server2.herokuapp.com/api/users/${id}`, {
       method: "put",
       headers: {
         "content-type": "application/json",

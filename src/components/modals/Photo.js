@@ -20,7 +20,7 @@ const Photo = ({ setPhoto }) => {
     })
       .then((response) => response.json())
       .then((result) => {
-        fetch(`http://localhost:8080/api/users/`, {
+        fetch(`https://employee-management-server2.herokuapp.com/api/users/`, {
           method: "put",
           headers: {
             "content-type": "application/json",

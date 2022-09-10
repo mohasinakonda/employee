@@ -12,7 +12,7 @@ const AddEmpModal = ({ setIsOpen, refetch }) => {
     const salary = event.target.salary.value;
     const joiningDate = event.target.joinDate.value;
     const employeeInfo = { name, email, salary, joiningDate, photo };
-    fetch(`http://localhost:8080/api/users/`, {
+    fetch(`https://employee-management-server2.herokuapp.com/api/users/`, {
       method: "post",
       headers: {
         "content-type": "application/json",

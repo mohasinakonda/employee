@@ -3,9 +3,12 @@ import { toast } from "react-toastify";
 
 const DeleteModal = ({ employee, setEmployee, refetch }) => {
   const deleteEmployee = () => {
-    fetch(`http://localhost:8080/api/users/${employee._id}`, {
-      method: "delete",
-    }).then((res) => {
+    fetch(
+      `https://employee-management-server2.herokuapp.com/api/users/${employee._id}`,
+      {
+        method: "delete",
+      }
+    ).then((res) => {
       if (res.status === 200) {
         toast.success("Delete successful");
         setEmployee(null);
