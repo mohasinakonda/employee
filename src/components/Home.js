@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-import React from "react";
+import React, { useState } from "react";
 
 import Table from "./employeeTable/Table";
 import AddEmpModal from "./modals/AddEmpModal";
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div>
       <div className=" min-h-screen bg-base-200">
@@ -24,7 +25,7 @@ const Home = () => {
 
         <Table />
       </div>
-      <AddEmpModal />
+      {isOpen && <AddEmpModal setIsOpen={setIsOpen} />}
     </div>
   );
 };

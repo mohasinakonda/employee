@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Photo from "./Photo";
 
-const AddEmpModal = () => {
+const AddEmpModal = ({ setIsOpen }) => {
   const [photo, setPhoto] = useState("");
   const handleEmployee = async (event) => {
     event.preventDefault();
@@ -17,16 +17,12 @@ const AddEmpModal = () => {
         "content-type": "application/json",
       },
       body: JSON.stringify(employeeInfo),
-    })
-      .then((res) => {
-        console.log(res.status);
-        res.json();
-      })
-      .then((result) => {
-        if (result) {
-          toast.success("Registration completed successful!");
-        }
-      });
+    }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Register success full");
+        setIsOpen(false);
+      }
+    });
   };
 
   return (

@@ -13,7 +13,7 @@ const Table = () => {
     fetch("http://localhost:8080/api/users/")
       .then((res) => res.json())
       .then((data) => setEmployees(data));
-  }, []);
+  }, [id, employee]);
   const updateHandler = (id) => {
     setId(id);
   };
