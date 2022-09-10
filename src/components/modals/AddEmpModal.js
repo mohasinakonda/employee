@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Photo from "./Photo";
 
-const AddEmpModal = ({ setIsOpen }) => {
+const AddEmpModal = ({ setIsOpen, refetch }) => {
   const [photo, setPhoto] = useState("");
-  const handleEmployee = async (event) => {
+  //========================HANDLE EMPLOYEE FUNCTION ===========
+  const handleEmployee = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
     const email = event.target.email.value;
@@ -21,6 +22,7 @@ const AddEmpModal = ({ setIsOpen }) => {
       if (res.status === 200) {
         toast.success("Register success full");
         setIsOpen(false);
+        refetch();
       }
     });
   };

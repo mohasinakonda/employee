@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 
-const DeleteModal = ({ employee, setEmployee }) => {
+const DeleteModal = ({ employee, setEmployee, refetch }) => {
   const deleteEmployee = () => {
     fetch(`http://localhost:8080/api/users/${employee._id}`, {
       method: "delete",
@@ -9,6 +9,7 @@ const DeleteModal = ({ employee, setEmployee }) => {
       if (res.status === 200) {
         toast.success("Delete successful");
         setEmployee(null);
+        refetch();
       }
     });
   };

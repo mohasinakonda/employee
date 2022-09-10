@@ -7,13 +7,22 @@ import Table from "./employeeTable/Table";
 import AddEmpModal from "./modals/AddEmpModal";
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [employee, setEmployee] = useState([]);
+
+  const empHandler = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    fetch(`http://localhost:8080/api/users/name/${name}`)
+      .then((res) => res.json())
+      .then((data) => setEmployee(data));
+  };
   return (
     <div>
       <div className=" min-h-screen bg-base-200">
-        <form className="text-center py-5">
+        <form className="text-center py-5" onSubmit={empHandler}>
           <input
             type="text"
+            name="name"
             placeholder="Search"
             className="input input-primary"
           />
@@ -23,9 +32,9 @@ const Home = () => {
         </form>
         <h2 className="text-3xl text-center">Details from Employee</h2>
 
-        <Table />
+        <Table empHandler={employee} />
       </div>
-      {isOpen && <AddEmpModal setIsOpen={setIsOpen} />}
+      {/* {isOpen && <AddEmpModal setIsOpen={setIsOpen} />} */}
     </div>
   );
 };

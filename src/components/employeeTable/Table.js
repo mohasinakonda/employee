@@ -3,17 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UpdateEmpModal from "../modals/UpdateEmpModal";
 import DeleteModal from "../modals/DeleteModal";
-
-const Table = () => {
-  const [employees, setEmployees] = useState([]);
+import { useQuery } from "react-query";
+import AddEmpModal from "../modals/AddEmpModal";
+const Table = ({ employee: emp }) => {
   const [id, setId] = useState("");
   const [employee, setEmployee] = useState({});
+  const [isOpen, setIsOpen] = useState(true);
+  const { data, isLoading, refetch } = useQuery("emp", () =>
+    fetch("http://localhost:8080/api/users/").then((res) => res.json())
+  );
+  if (isLoading) {
+    return <h2 className="text-3xl text-center">Loading</h2>;
+  }
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/users/")
-      .then((res) => res.json())
-      .then((data) => setEmployees(data));
-  }, [id, employee]);
   const updateHandler = (id) => {
     setId(id);
   };
@@ -35,7 +37,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {data.map((employee) => (
             <tr>
               <td>
                 <div className="flex items-center space-x-3">
@@ -77,10 +79,15 @@ const Table = () => {
                                 MOdal
       ======================================================
       */}
-      {id && <UpdateEmpModal setId={setId} id={id} />};
+      {id && <UpdateEmpModal refetch={refetch} setId={setId} id={id} />};
       {employee && (
-        <DeleteModal setEmployee={setEmployee} employee={employee} />
+        <DeleteModal
+          refetch={refetch}
+          setEmployee={setEmployee}
+          employee={employee}
+        />
       )}
+      {isOpen && <AddEmpModal refetch={refetch} setIsOpen={setIsOpen} />}
     </div>
   );
 };

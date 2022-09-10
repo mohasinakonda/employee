@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const UpdateEmpModal = ({ id, setId }) => {
+const UpdateEmpModal = ({ id, setId, refetch }) => {
   const [employee, setEmployee] = useState({});
   useEffect(() => {
     fetch(`http://localhost:8080/api/users/${id}`)
@@ -27,6 +27,7 @@ const UpdateEmpModal = ({ id, setId }) => {
       if (res.status === 200) {
         toast.success("update successful!");
         setId("");
+        refetch();
       }
     });
   };
